@@ -1,6 +1,7 @@
 "use client"
 
-import { Phone, Mail, MapPin, Instagram, Facebook, MessageCircle } from "lucide-react"
+import { Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react"
+import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -11,8 +12,8 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Logo & Description */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8">
+            <div className="flex items-center mb-4">
+              <div className="w-32 h-auto">
                 <svg viewBox="0 0 390.03 257.09" className="w-full h-full">
                   <path
                     className="fill-[#ce2a4d]"
@@ -76,7 +77,6 @@ export default function Footer() {
                   />
                 </svg>
               </div>
-              <span className="text-lg font-bold">HO Factory Pet</span>
             </div>
             <p className="text-gray-400 text-sm">
               Productos premium para mascotas con diseños exclusivos y calidad superior.
@@ -104,7 +104,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/faq" className="text-gray-400 hover:text-white transition-colors">
-                  FAQ
+                  Preguntas frecuentes
                 </Link>
               </li>
               <li>
@@ -142,7 +142,7 @@ export default function Footer() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="border-gray-600 text-gray-400 hover:text-white hover:border-white bg-transparent"
+                  className="border-gray-600 text-gray-400 hover:text-white hover:border-white bg-transparent hover:bg-transparent"
                 >
                   <Instagram className="h-4 w-4" />
                 </Button>
@@ -151,7 +151,7 @@ export default function Footer() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="border-gray-600 text-gray-400 hover:text-white hover:border-white bg-transparent"
+                  className="border-gray-600 text-gray-400 hover:text-white hover:border-white bg-transparent hover:bg-transparent"
                 >
                   <Facebook className="h-4 w-4" />
                 </Button>
@@ -161,13 +161,13 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-400">
-          <p>© 2024 HO Factory Pet. Desarrollado y diseñado por Nexium Solutions y Ditiero.</p>
+          <p>© {new Date().getFullYear()} HO Factory Pet. Desarrollado y diseñado por <a href="https://nexiumsolutions.online/" target="_blank" className="text-[#01c38e] hover:text-[#05e2a7] transition-all duration-300 ease-in-out">Nexium Solutions y DiTiero</a>.</p>
         </div>
       </div>
 
       {/* WhatsApp Float Button */}
       <a
-        href="https://wa.link/send?phone=5491144775070&text=¡Hola! Me interesa conocer más sobre los productos de HO Factory Pet 🐾"
+        href="https://wa.me/5491144775070?text=¡Hola! Me estoy contactando desde la página web de HO Factory."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-40"
@@ -176,7 +176,7 @@ export default function Footer() {
           size="icon"
           className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg hover:shadow-xl transition-all"
         >
-          <MessageCircle className="h-6 w-6" />
+          <WhatsAppIcon className="h-6 w-6" />
         </Button>
       </a>
     </footer>

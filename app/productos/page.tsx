@@ -1,10 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Search, ArrowRight } from "lucide-react"
+import { Search, ArrowRight, ShoppingCart } from "lucide-react"
 import Link from "next/link"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -15,6 +16,7 @@ import { useCart } from "@/contexts/cart-context"
 const products = [
   {
     id: 1,
+    slug: "rascador-premium-madera",
     name: "Rascador Premium Madera",
     category: "Rascadores",
     image: "/wooden-cat-scratching-posts-premium-quality-modern.png",
@@ -24,6 +26,7 @@ const products = [
   },
   {
     id: 2,
+    slug: "petrrari-moises-auto",
     name: "Petrrari Moisés Auto",
     category: "Camas Exclusivas",
     image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
@@ -33,6 +36,7 @@ const products = [
   },
   {
     id: 3,
+    slug: "merc3des-pet-bed",
     name: "Merc3des Pet Bed",
     category: "Camas Exclusivas",
     image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
@@ -42,6 +46,7 @@ const products = [
   },
   {
     id: 4,
+    slug: "combi-vw-hippie-cucha",
     name: "Combi VW Hippie Cucha",
     category: "Camas Exclusivas",
     image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
@@ -51,6 +56,7 @@ const products = [
   },
   {
     id: 5,
+    slug: "mochila-transportadora-premium",
     name: "Mochila Transportadora Premium",
     category: "Transportadoras",
     image: "/happy-dog-and-cat-with-premium-pet-products-modern.png",
@@ -60,6 +66,7 @@ const products = [
   },
   {
     id: 6,
+    slug: "alimento-dr-cossia-natural",
     name: "Alimento Dr. Cossia Natural",
     category: "Alimentos",
     image: "/happy-woman-with-yellow-sweater-holding-small-whit.png",
@@ -72,10 +79,72 @@ const products = [
 const categories = ["Todos", "Rascadores", "Camas Exclusivas", "Transportadoras", "Alimentos"]
 
 export default function ProductosPage() {
-  const [selectedCategory, setSelectedCategory] = useState("Todos")
-  const [searchTerm, setSearchTerm] = useState("")
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const { cart, updateCart } = useCart()
+  const { cart, updateCart, addToCart } = useCart()
+
+  // Obtener parámetros de URL
+  const categoriaFromUrl = searchParams.get('categoria')
+  const searchFromUrl = searchParams.get('search') || ''
+
+  // Estado local sincronizado con URL
+  const [selectedCategory, setSelectedCategory] = useState(categoriaFromUrl || "Todos")
+  const [searchTerm, setSearchTerm] = useState(searchFromUrl)
+
+  // Sincronizar estado con URL cuando cambien los parámetros
+  useEffect(() => {
+    if (categoriaFromUrl !== selectedCategory) {
+      setSelectedCategory(categoriaFromUrl || "Todos")
+    }
+  }, [categoriaFromUrl])
+
+  // Sincronizar búsqueda con URL
+  useEffect(() => {
+    if (searchFromUrl !== searchTerm) {
+      setSearchTerm(searchFromUrl)
+    }
+  }, [searchFromUrl])
+
+  // Función para cambiar categoría
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category)
+    const params = new URLSearchParams()
+    if (category !== "Todos") {
+      params.set('categoria', category)
+    }
+    if (searchTerm) {
+      params.set('search', searchTerm)
+    }
+    
+    const queryString = params.toString()
+    const newUrl = queryString ? `?${queryString}` : '/productos'
+    router.replace(newUrl, { scroll: false })
+  }
+
+  // Función para cambiar búsqueda
+  const handleSearchChange = (search: string) => {
+    setSearchTerm(search)
+  }
+
+  // Debounce para actualizar URL de búsqueda
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const params = new URLSearchParams()
+      if (selectedCategory !== "Todos") {
+        params.set('categoria', selectedCategory)
+      }
+      if (searchTerm) {
+        params.set('search', searchTerm)
+      }
+      
+      const queryString = params.toString()
+      const newUrl = queryString ? `?${queryString}` : '/productos'
+      router.replace(newUrl, { scroll: false })
+    }, 500)
+
+    return () => clearTimeout(timeoutId)
+  }, [searchTerm, selectedCategory, router])
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory
@@ -104,7 +173,7 @@ export default function ProductosPage() {
       </section>
 
       {/* Products Section */}
-      <section className="py-20">
+      <section className="py-20 dark:bg-slate-800">
         <div className="container mx-auto px-4">
           {/* Filters */}
           <div className="flex flex-col md:flex-row gap-4 mb-8">
@@ -115,7 +184,7 @@ export default function ProductosPage() {
                   type="text"
                   placeholder="Buscar productos..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => handleSearchChange(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ce2a4d] focus:border-transparent"
                 />
               </div>
@@ -125,14 +194,47 @@ export default function ProductosPage() {
                 <Button
                   key={category}
                   variant={selectedCategory === category ? "default" : "outline"}
-                  onClick={() => setSelectedCategory(category)}
-                  className={selectedCategory === category ? "bg-[#ce2a4d] hover:bg-[#b8243e]" : ""}
+                  onClick={() => handleCategoryChange(category)}
+                  className={selectedCategory === category ? "bg-[#ce2a4d] hover:bg-[#b8243e] text-white" : ""}
                 >
                   {category}
                 </Button>
               ))}
             </div>
           </div>
+
+          {/* Active Filters Display */}
+          {(selectedCategory !== "Todos" || searchTerm) && (
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Filtros activos:</span>
+                  {selectedCategory !== "Todos" && (
+                    <Badge variant="secondary" className="bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                      Categoría: {selectedCategory}
+                    </Badge>
+                  )}
+                  {searchTerm && (
+                    <Badge variant="secondary" className="bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                      Búsqueda: "{searchTerm}"
+                    </Badge>
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setSelectedCategory("Todos")
+                    setSearchTerm("")
+                    router.replace('/productos', { scroll: false })
+                  }}
+                  className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                >
+                  Limpiar filtros
+                </Button>
+              </div>
+            </div>
+          )}
 
           {/* Products Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -144,11 +246,11 @@ export default function ProductosPage() {
                     alt={product.name}
                     className="w-full h-48 object-cover"
                   />
-                  <Badge className="absolute top-2 right-2 bg-[#ce2a4d]">{product.category}</Badge>
+                  <Badge className="absolute top-2 right-2 bg-[#ce2a4d] text-white">{product.category}</Badge>
                   {product.inStock ? (
-                    <Badge className="absolute top-2 left-2 bg-green-500">En Stock</Badge>
+                    <Badge className="absolute top-2 left-2 bg-green-500 text-white">En Stock</Badge>
                   ) : (
-                    <Badge className="absolute top-2 left-2 bg-red-500">Agotado</Badge>
+                    <Badge className="absolute top-2 left-2 bg-red-500 text-white">Agotado</Badge>
                   )}
                 </div>
                 <CardContent className="p-4">
@@ -171,12 +273,31 @@ export default function ProductosPage() {
                     <span className="text-sm text-gray-500 dark:text-slate-400">
                       {product.inStock ? "Disponible" : "No disponible"}
                     </span>
-                    <Link href={`/productos/${product.id}`}>
-                      <Button size="sm" className="bg-[#2d549b] hover:bg-[#1e3a6f] text-white">
-                        Ver Detalles
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                    <div className="flex gap-2">
+                      <Button 
+                        size="sm" 
+                        className="bg-[#ce2a4d] hover:bg-[#b8243e] text-white"
+                        onClick={() => {
+                          addToCart({
+                            id: product.id,
+                            name: product.name,
+                            image: product.image,
+                            price: 0,
+                            quantity: 1
+                          })
+                        }}
+                        disabled={!product.inStock}
+                      >
+                        <ShoppingCart className="mr-2 h-4 w-4" />
+                        Agregar
                       </Button>
-                    </Link>
+                      <Link href={`/productos/${product.slug}`}>
+                        <Button size="sm" variant="outline" className="border-[#2d549b] text-[#2d549b] hover:bg-[#2d549b] hover:text-white">
+                          Ver Detalles
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -206,7 +327,7 @@ export default function ProductosPage() {
               </Link>
               <Link href="/faq">
                 <Button size="lg" variant="outline" className="px-8 py-4">
-                  Ver FAQ
+                  Ver Preguntas frecuentes
                 </Button>
               </Link>
             </div>

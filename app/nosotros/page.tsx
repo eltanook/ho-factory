@@ -33,7 +33,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* Main Content */}
-      <section className="py-20">
+      <section className="py-20 dark:bg-slate-800">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
             <div>

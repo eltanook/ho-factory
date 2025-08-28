@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ChevronDown, ChevronUp, MessageCircle, Phone, Mail } from "lucide-react"
+import { ChevronDown, ChevronUp, Phone, Mail } from "lucide-react"
+import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import Link from "next/link"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -110,7 +111,7 @@ export default function FAQPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20">
+      <section className="py-20 dark:bg-slate-800">
         <div className="container mx-auto px-4">
           {/* Category Filters */}
           <div className="text-center mb-12">
@@ -121,7 +122,7 @@ export default function FAQPage() {
               <Button
                 variant={selectedCategory === "Todas" ? "default" : "outline"}
                 onClick={() => setSelectedCategory("Todas")}
-                className={selectedCategory === "Todas" ? "bg-[#ce2a4d] hover:bg-[#b8243e]" : ""}
+                className={selectedCategory === "Todas" ? "bg-[#ce2a4d] hover:bg-[#b8243e] text-white" : ""}
               >
                 Todos
               </Button>
@@ -130,7 +131,7 @@ export default function FAQPage() {
                   key={category.title}
                   variant={selectedCategory === category.title ? "default" : "outline"}
                   onClick={() => setSelectedCategory(category.title)}
-                  className={selectedCategory === category.title ? "bg-[#ce2a4d] hover:bg-[#b8243e]" : ""}
+                  className={selectedCategory === category.title ? "bg-[#ce2a4d] hover:bg-[#b8243e] text-white" : ""}
                 >
                   <span className="mr-2">{category.icon}</span>
                   {category.title}
@@ -222,7 +223,7 @@ export default function FAQPage() {
               <Card className="text-center p-6 border-0 shadow-lg">
                 <CardContent className="p-0">
                   <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <MessageCircle className="w-8 h-8 text-green-500" />
+                    <WhatsAppIcon className="w-8 h-8 text-green-500" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     WhatsApp
@@ -231,7 +232,7 @@ export default function FAQPage() {
                     Respuesta rápida y personalizada
                   </p>
                   <a 
-                    href="https://wa.link/send?phone=5491144775070&text=¡Hola! Tengo una consulta sobre HO Factory Pet 🐾"
+                    href="https://wa.me/5491144775070?text=¡Hola! Me estoy contactando desde la página web de HO Factory."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-green-500 font-medium hover:underline"

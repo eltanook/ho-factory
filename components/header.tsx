@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Menu, X, Sun, Moon, MessageCircle } from "lucide-react"
+import { ShoppingCart, Menu, X, Sun, Moon } from "lucide-react"
+import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import Link from "next/link"
 import { useTheme } from "next-themes"
 
@@ -28,10 +29,10 @@ export default function Header({ cart, onCartOpen }: HeaderProps) {
       {/* Fixed Header */}
       <header className="fixed top-0 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-slate-700 z-50 shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link href="/" className="flex items-center">
-              <div className="w-12 h-8">
+          <div className="flex items-center justify-between h-16 relative">
+            {/* Logo - Centered on mobile/tablet, left on desktop */}
+            <Link href="/" className="flex items-center lg:static absolute left-1/2 -translate-x-1/2 lg:left-auto lg:transform-none">
+              <div className="w-18 h-auto">
                 <svg viewBox="0 0 390.03 257.09" className="w-full h-full">
                   <path
                     className="fill-[#ce2a4d]"
@@ -98,7 +99,7 @@ export default function Header({ cart, onCartOpen }: HeaderProps) {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-16">
               <Link href="/" className="text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium">
                 Inicio
               </Link>
@@ -109,12 +110,24 @@ export default function Header({ cart, onCartOpen }: HeaderProps) {
                 Productos
               </Link>
               <Link href="/faq" className="text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium">
-                FAQ
+                Preguntas frecuentes
               </Link>
               <Link href="/contacto" className="text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium">
                 Contacto
               </Link>
             </nav>
+
+            {/* Left Side - Menu Button (only on mobile/tablet) */}
+            <div className="lg:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsMenuOpen(true)}
+                className="text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </div>
 
             {/* Right Side Controls */}
             <div className="flex items-center space-x-4">
@@ -140,75 +153,73 @@ export default function Header({ cart, onCartOpen }: HeaderProps) {
                   </Badge>
                 )}
               </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsMenuOpen(true)}
-                className="md:hidden text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
             </div>
           </div>
         </div>
       </header>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div className="fixed inset-0 bg-black/50" onClick={() => setIsMenuOpen(false)} />
-          <div className="fixed left-0 top-0 h-full w-64 bg-white dark:bg-slate-900 p-6 shadow-xl">
-            <div className="flex items-center justify-between mb-8">
-              <span className="text-lg font-bold text-[#ce2a4d] font-serif">Menú</span>
-              <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <nav className="space-y-4">
-              <Link
-                href="/"
-                className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Inicio
-              </Link>
-              <Link
-                href="/nosotros"
-                className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Nosotros
-              </Link>
-              <Link
-                href="/productos"
-                className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Productos
-              </Link>
-              <Link
-                href="/faq"
-                className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                FAQ
-              </Link>
-              <Link
-                href="/contacto"
-                className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contacto
-              </Link>
-            </nav>
+      <div className={`fixed inset-0 z-50 lg:hidden ${!isMenuOpen ? 'pointer-events-none' : ''}`}>
+        <div 
+          className={`fixed inset-0 bg-black/50 transition-opacity duration-300 ${
+            isMenuOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={() => setIsMenuOpen(false)} 
+        />
+        <div 
+          className={`fixed left-0 top-0 h-full w-64 bg-white dark:bg-slate-900 p-6 shadow-2xl transform transition-transform duration-300 ease-in-out ${
+            isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <div className="flex items-center justify-between mb-8">
+            <span className="text-lg font-bold text-[#ce2a4d] font-serif">Menú</span>
+            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
+              <X className="h-5 w-5" />
+            </Button>
           </div>
+          <nav className="space-y-4">
+            <Link
+              href="/"
+              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Inicio
+            </Link>
+            <Link
+              href="/nosotros"
+              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Nosotros
+            </Link>
+            <Link
+              href="/productos"
+              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Productos
+            </Link>
+            <Link
+              href="/faq"
+              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Preguntas frecuentes
+            </Link>
+            <Link
+              href="/contacto"
+              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contacto
+          </Link>
+          </nav>
         </div>
-      )}
+      </div>
 
       {/* WhatsApp Float Button */}
       <a
-        href="https://wa.link/send?phone=5491144775070&text=¡Hola! Me interesa conocer más sobre los productos de HO Factory Pet 🐾"
+        href="https://wa.me/5491144775070?text=¡Hola! Me estoy contactando desde la página web de HO Factory."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-40"
@@ -217,7 +228,7 @@ export default function Header({ cart, onCartOpen }: HeaderProps) {
           size="icon"
           className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105"
         >
-          <MessageCircle className="h-6 w-6" />
+          <WhatsAppIcon className="h-6 w-6" />
         </Button>
       </a>
     </>

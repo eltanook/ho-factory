@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Phone, Mail, MapPin, Instagram, Facebook, MessageCircle, Clock, Users } from "lucide-react"
+import { Phone, Mail, MapPin, Instagram, Facebook, Clock, Users } from "lucide-react"
+import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Link from "next/link"
@@ -56,7 +57,7 @@ export default function ContactoPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20">
+      <section className="py-20 dark:bg-slate-800">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Contact Form */}
@@ -154,7 +155,17 @@ export default function ContactoPage() {
                   </form>
                 </CardContent>
               </Card>
+              {/* Map Placeholder */}
+            <div className="bg-gray-200 mt-12 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl">
+              <div className="h-96 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
+                <div className="text-center">
+                  <MapPin className="w-16 h-16 text-gray-500 dark:text-gray-400 mx-auto mb-4" />
+                  
+                </div>
+              </div>
             </div>
+            </div>
+            
 
             {/* Contact Info */}
             <div className="space-y-6">
@@ -220,12 +231,12 @@ export default function ContactoPage() {
 
                     <div className="flex items-center space-x-4">
                       <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center">
-                        <MessageCircle className="w-5 h-5 text-green-500" />
+                        <WhatsAppIcon className="w-5 h-5 text-green-500" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900 dark:text-white">WhatsApp</h4>
                         <a 
-                          href="https://wa.link/send?phone=5491144775070&text=¡Hola! Me interesa conocer más sobre los productos de HO Factory Pet 🐾"
+                          href="https://wa.me/5491144775070?text=¡Hola! Me estoy contactando desde la página web de HO Factory."
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-green-500 hover:underline"
@@ -279,7 +290,7 @@ export default function ContactoPage() {
                       href="https://instagram.com/ho_factory_pet" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-10 h-10 bg-[#ce2a4d]/10 rounded-full flex items-center justify-center hover:bg-[#ce2a4d]/20 transition-colors"
+                      className="w-10 h-10 bg-[#ce2a4d]/10 rounded-full flex items-center justify-center hover:bg-white hover:text-[#ce2a4d] transition-colors"
                     >
                       <Instagram className="w-5 h-5 text-[#ce2a4d]" />
                     </a>
@@ -287,7 +298,7 @@ export default function ContactoPage() {
                       href="https://facebook.com/Hofactorypet" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="w-10 h-10 bg-[#2d549b]/10 rounded-full flex items-center justify-center hover:bg-[#2d549b]/20 transition-colors"
+                      className="w-10 h-10 bg-[#2d549b]/10 rounded-full flex items-center justify-center hover:bg-white hover:text-[#2d549b] transition-colors"
                     >
                       <Facebook className="w-5 h-5 text-[#2d549b]" />
                     </a>
@@ -295,6 +306,8 @@ export default function ContactoPage() {
                 </CardContent>
               </Card>
             </div>
+
+            
           </div>
 
           {/* CTA Section */}
@@ -308,12 +321,12 @@ export default function ContactoPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://wa.link/send?phone=5491144775070&text=¡Hola! Quiero agendar una llamada para conocer más sobre HO Factory Pet 🐾"
+                href="https://wa.me/5491144775070?text=¡Hola! Me estoy contactando desde la página web de HO Factory."
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Button size="lg" className="bg-green-500 hover:bg-green-600 text-white px-8 py-4">
-                  <MessageCircle className="mr-2 h-5 w-5" />
+                  <WhatsAppIcon className="mr-2 h-5 w-5" />
                   Agendar por WhatsApp
                 </Button>
               </a>

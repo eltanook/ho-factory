@@ -5,6 +5,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { CartProvider } from "@/contexts/cart-context"
 import { Toaster } from "@/components/ui/sonner"
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,8 +35,12 @@ export const metadata: Metadata = {
     locale: "es_AR",
   },
   robots: "index, follow",
-  viewport: "width=device-width, initial-scale=1",
-    generator: 'v0.app'
+  generator: 'v0.app'
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -53,6 +59,25 @@ export default function RootLayout({
           <CartProvider>
             {children}
             <Toaster position="top-right" />
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              toastStyle={{
+                backgroundColor: '#ce2a4d',
+                color: 'white',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: '500'
+              }}
+            />
           </CartProvider>
         </ThemeProvider>
       </body>

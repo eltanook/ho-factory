@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Star, Heart, Award, Truck, Shield, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
+import { Star, Heart, Award, Truck, Shield, ChevronLeft, ChevronRight, ArrowRight, Bed, Scissors, Car, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -15,18 +15,21 @@ const heroSlides = [
     title: "Cuidamos a tus Pequeñas Mascotas",
     subtitle: "Productos premium con diseños exclusivos y calidad superior",
     cta: "Ver Productos",
+    ctaLink: "/productos",
     image: "/happy-dog-and-cat-with-premium-pet-products-modern.png",
     },
     {
       title: "Petrrari & Merc3des Collection",
       subtitle: "Camas de lujo inspiradas en autos deportivos",
-      cta: "Productos Exclusivos",
+      cta: "Ver Camas Exclusivas",
+      ctaLink: "/productos?categoria=Camas%20Exclusivas",
     image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
     },
     {
       title: "Rascadores de Madera Premium",
       subtitle: "100% madera alfombrada, diseño propio",
       cta: "Ver Rascadores",
+      ctaLink: "/productos?categoria=Rascadores",
     image: "/wooden-cat-scratching-posts-premium-quality-modern.png",
     },
   ]
@@ -70,7 +73,7 @@ export default function HomePage() {
                 <p className="text-xl md:text-2xl mb-8 text-gray-700 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
                   {slide.subtitle}
                 </p>
-                <Link href="/productos">
+                <Link href={slide.ctaLink}>
                   <Button
                     size="lg"
                     className="bg-[#ce2a4d] hover:bg-[#b8243e] text-white px-8 py-4 rounded-full font-medium shadow-lg hover:shadow-xl transition-all"
@@ -188,6 +191,238 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Product Categories Section */}
+      <section className="py-20 bg-gray-50 dark:bg-slate-900">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Nuestras Categorías de Productos
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-slate-400 max-w-3xl mx-auto">
+              Descubre cada una de nuestras líneas especializadas, diseñadas con pasión y dedicación para el bienestar de tus mascotas
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Camas Exclusivas */}
+            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="relative h-48 bg-gradient-to-br from-[#ce2a4d]/20 to-[#2d549b]/20 flex items-center justify-center">
+                <Car className="w-20 h-20 text-[#ce2a4d] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  Camas Exclusivas
+                </h3>
+                <p className="text-gray-600 dark:text-slate-400 mb-4 leading-relaxed">
+                  Nuestra colección premium incluye camas inspiradas en autos deportivos como Petrrari, Merc3des y Combi VW Hippie. 
+                  Fabricadas con pana sublimada de alta calidad y diseño anti-desgarro.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Pana sublimada premium
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    Diseños únicos y exclusivos
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Anti-manchas y lavable
+                  </div>
+                </div>
+                <Link href="/productos?categoria=Camas%20Exclusivas">
+                  <Button className="w-full bg-[#ce2a4d] hover:bg-[#b8243e] text-white">
+                    Ver Camas Exclusivas
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Rascadores */}
+            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="relative h-48 bg-gradient-to-br from-[#2d549b]/20 to-[#ce2a4d]/20 flex items-center justify-center">
+                <Scissors className="w-20 h-20 text-[#2d549b] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  Rascadores Premium
+                </h3>
+                <p className="text-gray-600 dark:text-slate-400 mb-4 leading-relaxed">
+                  Rascadores 100% madera alfombrada con diseño exclusivo HO Factory Pet. 
+                  Estructura robusta y estable, perfectos para gatos de todas las edades y tamaños.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    100% madera natural
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Alfombrado resistente
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    Diseño propio patentado
+                  </div>
+                </div>
+                <Link href="/productos?categoria=Rascadores">
+                  <Button className="w-full bg-[#2d549b] hover:bg-[#1e3a6b] text-white">
+                    Ver Rascadores
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Transportadoras */}
+            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="relative h-48 bg-gradient-to-br from-[#ce2a4d]/20 to-[#2d549b]/20 flex items-center justify-center">
+                <ShoppingBag className="w-20 h-20 text-[#ce2a4d] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  Transportadoras Premium
+                </h3>
+                <p className="text-gray-600 dark:text-slate-400 mb-4 leading-relaxed">
+                  Mochilas transportadoras de alta calidad diseñadas para la comodidad y seguridad de tus mascotas. 
+                  Ventilación óptima y correas acolchadas para máximo confort.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Ventilación óptima
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    Correas acolchadas
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Material resistente
+                  </div>
+                </div>
+                <Link href="/productos?categoria=Transportadoras">
+                  <Button className="w-full bg-[#ce2a4d] hover:bg-[#b8243e] text-white">
+                    Ver Transportadoras
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Alimentos */}
+            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="relative h-48 bg-gradient-to-br from-[#2d549b]/20 to-[#ce2a4d]/20 flex items-center justify-center">
+                <Heart className="w-20 h-20 text-[#2d549b] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  Alimentos Naturales
+                </h3>
+                <p className="text-gray-600 dark:text-slate-400 mb-4 leading-relaxed">
+                  Línea premium de alimentos naturales Dr. Cossia, formulada para proporcionar 
+                  nutrición completa y balanceada sin conservantes artificiales.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    100% natural
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Sin conservantes
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    Nutrición completa
+                  </div>
+                </div>
+                <Link href="/productos?categoria=Alimentos">
+                  <Button className="w-full bg-[#2d549b] hover:bg-[#1e3a6b] text-white">
+                    Ver Alimentos
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Accesorios */}
+            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="relative h-48 bg-gradient-to-br from-[#ce2a4d]/20 to-[#2d549b]/20 flex items-center justify-center">
+                <Star className="w-20 h-20 text-[#ce2a4d] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  Accesorios Premium
+                </h3>
+                <p className="text-gray-600 dark:text-slate-400 mb-4 leading-relaxed">
+                  Complementa la experiencia de tu mascota con nuestra línea de accesorios premium. 
+                  Desde juguetes hasta elementos de cuidado, todo diseñado con la misma calidad.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Juguetes interactivos
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    Elementos de cuidado
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Diseño exclusivo
+                  </div>
+                </div>
+                <Link href="/productos">
+                  <Button className="w-full bg-[#ce2a4d] hover:bg-[#b8243e] text-white">
+                    Ver Accesorios
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Servicios Personalizados */}
+            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="relative h-48 bg-gradient-to-br from-[#2d549b]/20 to-[#ce2a4d]/20 flex items-center justify-center">
+                <Award className="w-20 h-20 text-[#2d549b] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  Servicios Personalizados
+                </h3>
+                <p className="text-gray-600 dark:text-slate-400 mb-4 leading-relaxed">
+                  ¿Tienes una idea específica? Creamos productos personalizados según tus necesidades. 
+                  Desde colores especiales hasta diseños únicos, hacemos realidad tu visión.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    Diseños personalizados
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#ce2a4d] rounded-full mr-3"></div>
+                    Colores especiales
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 dark:text-slate-400">
+                    <div className="w-2 h-2 bg-[#2d549b] rounded-full mr-3"></div>
+                    Asesoramiento experto
+                  </div>
+                </div>
+                <Link href="/contacto">
+                  <Button className="w-full bg-[#2d549b] hover:bg-[#1e3a6b] text-white">
+                    Consultar Personalización
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-[#ce2a4d] to-[#2d549b]">
         <div className="container mx-auto px-4 text-center">
@@ -199,14 +434,14 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/productos">
-              <Button size="lg" variant="secondary" className="px-8 py-4 text-lg">
+              <Button size="lg" className="px-8 py-4 text-lg bg-[#ce2a4d] hover:bg-[#b8243e] text-white border-[#ce2a4d] hover:border-[#b8243e]">
                 Ver Productos
-                  </Button>
+              </Button>
             </Link>
             <Link href="/contacto">
-              <Button size="lg" variant="outline" className="px-8 py-4 text-lg border-white text-white hover:bg-white hover:text-[#ce2a4d]">
+              <Button size="lg" variant="outline" className="px-8 py-4 text-lg border-white text-black bg-white/80 hover:bg-white dark:border-white dark:text-white dark:hover:bg-white/10">
                 Contactar
-                    </Button>
+              </Button>
             </Link>
           </div>
         </div>
