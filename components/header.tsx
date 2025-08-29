@@ -7,10 +7,47 @@ import { ShoppingCart, Menu, X, Sun, Moon } from "lucide-react"
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import Link from "next/link"
 import { useTheme } from "next-themes"
+import { usePathname } from "next/navigation"
 
 interface HeaderProps {
   cart: any[]
   onCartOpen: () => void
+}
+
+// Componente NavLink personalizado que detecta la ruta activa
+function NavLink({ href, children, onClick, isMobile = false }: { href: string; children: React.ReactNode; onClick?: () => void; isMobile?: boolean }) {
+  const pathname = usePathname()
+  const isActive = pathname === href || (href !== "/" && pathname.startsWith(href))
+  
+  if (isMobile) {
+    return (
+      <Link
+        href={href}
+        className={`block py-3 transition-colors font-medium ${
+          isActive
+            ? "text-[#ce2a4d] dark:text-[#ce2a4d] font-semibold"
+            : "text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d]"
+        }`}
+        onClick={onClick}
+      >
+        {children}
+      </Link>
+    )
+  }
+  
+  return (
+    <Link
+      href={href}
+      className={`transition-colors font-medium ${
+        isActive
+          ? "text-[#ce2a4d] dark:text-[#ce2a4d] font-semibold"
+          : "text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d]"
+      }`}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  )
 }
 
 export default function Header({ cart, onCartOpen }: HeaderProps) {
@@ -100,21 +137,21 @@ export default function Header({ cart, onCartOpen }: HeaderProps) {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-16">
-              <Link href="/" className="text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium">
+              <NavLink href="/" onClick={() => setIsMenuOpen(false)}>
                 Inicio
-              </Link>
-              <Link href="/nosotros" className="text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium">
+              </NavLink>
+              <NavLink href="/nosotros" onClick={() => setIsMenuOpen(false)}>
                 Nosotros
-              </Link>
-              <Link href="/productos" className="text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium">
+              </NavLink>
+              <NavLink href="/productos" onClick={() => setIsMenuOpen(false)}>
                 Productos
-              </Link>
-              <Link href="/faq" className="text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium">
+              </NavLink>
+              <NavLink href="/faq" onClick={() => setIsMenuOpen(false)}>
                 Preguntas frecuentes
-              </Link>
-              <Link href="/contacto" className="text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium">
+              </NavLink>
+              <NavLink href="/contacto" onClick={() => setIsMenuOpen(false)}>
                 Contacto
-              </Link>
+              </NavLink>
             </nav>
 
             {/* Left Side - Menu Button (only on mobile/tablet) */}
@@ -178,41 +215,21 @@ export default function Header({ cart, onCartOpen }: HeaderProps) {
             </Button>
           </div>
           <nav className="space-y-4">
-            <Link
-              href="/"
-              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <NavLink href="/" onClick={() => setIsMenuOpen(false)} isMobile>
               Inicio
-            </Link>
-            <Link
-              href="/nosotros"
-              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            </NavLink>
+            <NavLink href="/nosotros" onClick={() => setIsMenuOpen(false)} isMobile>
               Nosotros
-            </Link>
-            <Link
-              href="/productos"
-              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            </NavLink>
+            <NavLink href="/productos" onClick={() => setIsMenuOpen(false)} isMobile>
               Productos
-            </Link>
-            <Link
-              href="/faq"
-              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            </NavLink>
+            <NavLink href="/faq" onClick={() => setIsMenuOpen(false)} isMobile>
               Preguntas frecuentes
-            </Link>
-            <Link
-              href="/contacto"
-              className="block py-3 text-gray-700 dark:text-slate-300 hover:text-[#ce2a4d] dark:hover:text-[#ce2a4d] transition-colors font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            </NavLink>
+            <NavLink href="/contacto" onClick={() => setIsMenuOpen(false)} isMobile>
               Contacto
-          </Link>
+          </NavLink>
           </nav>
         </div>
       </div>

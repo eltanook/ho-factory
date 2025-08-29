@@ -9,6 +9,7 @@ interface CartItem {
   price: number
   image: string
   quantity: number
+  color?: string // Color opcional del producto
 }
 
 interface ToastMessage {
@@ -19,9 +20,9 @@ interface ToastMessage {
 
 interface CartContextType {
   cart: CartItem[]
-  addToCart: (item: Omit<CartItem, "quantity">) => void
-  removeFromCart: (productId: number) => void
-  updateQuantity: (productId: number, quantity: number) => void
+  addToCart: (item: Omit<CartItem, "quantity">, initialQuantity?: number) => void
+  removeFromCart: (productId: number, color?: string) => void
+  updateQuantity: (productId: number, quantity: number, color?: string) => void
   updateCart: (cart: CartItem[]) => void
   clearCart: () => void
   getTotalItems: () => number
@@ -96,7 +97,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [pendingToasts])
 
-  const addToCart = (item: Omit<CartItem, "quantity">) => {
+  const addToCart = (item: Omit<CartItem, "quantity">, initialQuantity: number = 1) => {
     const now = Date.now()
     const lastAdd = lastAddTime.current[item.id] || 0
     
@@ -110,57 +111,73 @@ export function CartProvider({ children }: { children: ReactNode }) {
     lastAddTime.current[item.id] = now
 
     setCart((prevCart) => {
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id)
+      // Buscar item existente considerando color
+      const existingItem = prevCart.find((cartItem) => 
+        cartItem.id === item.id && cartItem.color === item.color
+      )
+      
       if (existingItem) {
         // Agregar toast a la cola en lugar de llamarlo directamente
         setPendingToasts(prev => [...prev, {
-          id: `add-${item.id}-${now}`,
+          id: `add-${item.id}-${item.color || 'default'}-${now}`,
           type: 'success',
-          message: `Cantidad de "${item.name}" aumentada en el carrito`
+          message: `Cantidad de "${item.name}"${item.color ? ` (${item.color})` : ''} aumentada en ${initialQuantity}`
         }])
         return prevCart.map((cartItem) =>
-          cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+          cartItem.id === item.id && cartItem.color === item.color 
+            ? { ...cartItem, quantity: cartItem.quantity + initialQuantity } 
+            : cartItem
         )
       }
       // Agregar toast a la cola en lugar de llamarlo directamente
       setPendingToasts(prev => [...prev, {
-        id: `add-${item.id}-${now}`,
+        id: `add-${item.id}-${item.color || 'default'}-${now}`,
         type: 'success',
-        message: `"${item.name}" agregado al carrito`
+        message: `"${item.name}"${item.color ? ` (${item.color})` : ''} agregado al carrito`
       }])
-      return [...prevCart, { ...item, quantity: 1 }]
+      return [...prevCart, { ...item, quantity: initialQuantity }]
     })
   }
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: number, color?: string) => {
     setCart((prevCart) => {
-      const itemToRemove = prevCart.find((item) => item.id === productId)
+      const itemToRemove = prevCart.find((item) => 
+        item.id === productId && item.color === color
+      )
       if (itemToRemove) {
         // Agregar toast a la cola en lugar de llamarlo directamente
         setPendingToasts(prev => [...prev, {
-          id: `remove-${productId}-${Date.now()}`,
+          id: `remove-${productId}-${color || 'default'}-${Date.now()}`,
           type: 'info',
-          message: `"${itemToRemove.name}" removido del carrito`
+          message: `"${itemToRemove.name}"${itemToRemove.color ? ` (${itemToRemove.color})` : ''} removido del carrito`
         }])
       }
-      return prevCart.filter((item) => item.id !== productId)
+      return prevCart.filter((item) => 
+        !(item.id === productId && item.color === color)
+      )
     })
   }
 
-  const updateQuantity = (productId: number, quantity: number) => {
+  const updateQuantity = (productId: number, quantity: number, color?: string) => {
     if (quantity === 0) {
-      removeFromCart(productId)
+      removeFromCart(productId, color)
       return
     }
     setCart((prevCart) => {
-      const updatedCart = prevCart.map((item) => (item.id === productId ? { ...item, quantity } : item))
-      const updatedItem = updatedCart.find((item) => item.id === productId)
+      const updatedCart = prevCart.map((item) => 
+        (item.id === productId && item.color === color) 
+          ? { ...item, quantity } 
+          : item
+      )
+      const updatedItem = updatedCart.find((item) => 
+        item.id === productId && item.color === color
+      )
       if (updatedItem) {
         // Agregar toast a la cola en lugar de llamarlo directamente
         setPendingToasts(prev => [...prev, {
-          id: `update-${productId}-${Date.now()}`,
+          id: `update-${productId}-${color || 'default'}-${Date.now()}`,
           type: 'success',
-          message: `Cantidad de "${updatedItem.name}" actualizada a ${quantity}`
+          message: `Cantidad de "${updatedItem.name}"${updatedItem.color ? ` (${updatedItem.color})` : ''} actualizada a ${quantity}`
         }])
       }
       return updatedCart
@@ -189,7 +206,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
 
     const itemsList = cart
-      .map((item) => `• ${item.name} x${item.quantity}`)
+      .map((item) => `• ${item.name}${item.color ? ` (${item.color})` : ''} x${item.quantity}`)
       .join("\n")
 
     const message = `¡Hola HO Factory Pet! 🐾\n\nQuiero consultar precios de estos productos:\n\n${itemsList}\n\nTotal de items: ${getTotalItems()}\n\n¡Gracias!`

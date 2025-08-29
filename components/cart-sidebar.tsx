@@ -34,20 +34,26 @@ export default function CartSidebar({ cart, isOpen, onClose, onUpdateCart }: Car
     }
   }, [isOpen])
 
-  const removeFromCart = (productId: number) => {
-    const newCart = cart.filter((item) => item.id !== productId)
+  const removeFromCart = (productId: number, color?: string) => {
+    const newCart = cart.filter((item) => 
+      !(item.id === productId && item.color === color)
+    )
     onUpdateCart(newCart)
     toast.success("Producto eliminado del carrito", {
       position: "bottom-right"
     })
   }
 
-  const updateQuantity = (productId: number, newQuantity: number) => {
+  const updateQuantity = (productId: number, newQuantity: number, color?: string) => {
     if (newQuantity === 0) {
-      removeFromCart(productId)
+      removeFromCart(productId, color)
       return
     }
-    const newCart = cart.map((item) => (item.id === productId ? { ...item, quantity: newQuantity } : item))
+    const newCart = cart.map((item) => 
+      (item.id === productId && item.color === color) 
+        ? { ...item, quantity: newQuantity } 
+        : item
+    )
     onUpdateCart(newCart)
   }
 
@@ -101,12 +107,17 @@ export default function CartSidebar({ cart, isOpen, onClose, onUpdateCart }: Car
                   />
                   <div className="flex-1">
                     <h3 className="font-medium text-sm text-gray-900 dark:text-white">{item.name}</h3>
+                    {item.color && (
+                      <p className="text-xs text-gray-600 dark:text-slate-400 mt-1">
+                        Color: {item.color}
+                      </p>
+                    )}
                     <div className="flex items-center space-x-2 mt-2">
                       <Button
                         variant="outline"
                         size="icon"
                         className="h-8 w-8 bg-transparent hover:bg-gray-100 dark:hover:bg-slate-700"
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity - 1, item.color)}
                       >
                         <Minus className="h-4 w-4" />
                       </Button>
@@ -115,7 +126,7 @@ export default function CartSidebar({ cart, isOpen, onClose, onUpdateCart }: Car
                         variant="outline"
                         size="icon"
                         className="h-8 w-8 bg-transparent hover:bg-gray-100 dark:hover:bg-slate-700"
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity + 1, item.color)}
                       >
                         <Plus className="h-4 w-4" />
                       </Button>
@@ -124,7 +135,7 @@ export default function CartSidebar({ cart, isOpen, onClose, onUpdateCart }: Car
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => removeFromCart(item.id, item.color)}
                     className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
                   >
                     <X className="h-4 w-4" />

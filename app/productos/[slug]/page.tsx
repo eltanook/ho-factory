@@ -3,7 +3,7 @@
 import { useState, useEffect, use, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, ArrowLeft, Play, ShoppingCart } from "lucide-react"
+import { Star, ArrowLeft, Play, ShoppingCart, Minus, Plus } from "lucide-react"
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon"
 import Link from "next/link"
 import Image from "next/image"
@@ -11,103 +11,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import CartSidebar from "@/components/cart-sidebar"
 import { useCart } from "@/contexts/cart-context"
-
-// Mock data for products (sin precios)
-const products = [
-  {
-    id: 1,
-    slug: "rascador-premium-madera",
-    name: "Rascador Premium Madera",
-    category: "Rascadores",
-    image: "/wooden-cat-scratching-posts-premium-quality-modern.png",
-    images: [
-      "/wooden-cat-scratching-posts-premium-quality-modern.png"
-    ],
-    description: "Rascador 100% madera alfombrada, diseño exclusivo HO Factory Pet. Fabricado con materiales premium y acabados perfectos para el bienestar de tu gato.",
-    longDescription: "Nuestro rascador premium de madera es el resultado de años de investigación y desarrollo. Cada pieza está cuidadosamente seleccionada y procesada para garantizar la máxima durabilidad y funcionalidad. El diseño exclusivo no solo es estéticamente atractivo, sino que también proporciona múltiples superficies de rascado para satisfacer las necesidades naturales de tu gato.",
-    features: [
-      "Madera premium seleccionada",
-      "Alfombrado resistente anti-desgarro",
-      "Diseño exclusivo y patentado",
-      "Múltiples niveles de rascado",
-      "Base estable y segura",
-      "Fácil de limpiar y mantener"
-    ],
-    specifications: {
-      "Altura": "120 cm",
-      "Base": "60 x 40 cm",
-      "Material": "Madera maciza + Alfombra premium",
-      "Peso máximo": "25 kg",
-      "Edad recomendada": "6+ meses",
-      "Garantía": "2 años"
-    },
-    inStock: true,
-    colors: ["Natural", "Marrón", "Negro"],
-    relatedProducts: [2, 3]
-  },
-  {
-    id: 2,
-    slug: "petrrari-moises-auto",
-    name: "Petrrari Moisés Auto",
-    category: "Camas Exclusivas",
-    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
-    images: [
-      "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png"
-    ],
-    description: "Cama exclusiva en forma de auto deportivo, pana sublimada premium. Diseño único inspirado en autos de lujo.",
-    longDescription: "La cama Petrrari es nuestra creación más emblemática. Inspirada en los autos deportivos más exclusivos del mundo, esta cama combina elegancia, confort y funcionalidad. La pana sublimada premium no solo es suave al tacto, sino que también es resistente a manchas y fácil de limpiar.",
-    features: [
-      "Pana sublimada premium",
-      "Diseño exclusivo y patentado",
-      "Anti-desgarro y anti-manchas",
-      "Relleno de alta densidad",
-      "Fácil de lavar",
-      "Múltiples tamaños disponibles"
-    ],
-    specifications: {
-      "Tamaño": "S, M, L, XL",
-      "Material": "Pana sublimada premium",
-      "Relleno": "Espuma de alta densidad",
-      "Lavable": "Sí, máquina",
-      "Garantía": "1 año",
-      "Peso máximo": "15 kg"
-    },
-    inStock: true,
-    colors: ["Rojo Ferrari", "Negro", "Azul"],
-    relatedProducts: [1, 3]
-  },
-  {
-    id: 3,
-    slug: "merc3des-pet-bed",
-    name: "Merc3des Pet Bed",
-    category: "Camas Exclusivas",
-    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
-    images: [
-      "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png"
-    ],
-    description: "Cama de lujo inspirada en Mercedes, calidad super premium. Elegancia y confort en cada detalle.",
-    longDescription: "La cama Merc3des representa la máxima expresión de lujo y calidad. Inspirada en la elegancia de los automóviles Mercedes-Benz, esta cama ofrece un confort excepcional con materiales de la más alta calidad. Cada detalle está cuidadosamente diseñado para proporcionar la mejor experiencia para tu mascota.",
-    features: [
-      "Calidad super premium",
-      "Anti-manchas avanzado",
-      "Diseño único y elegante",
-      "Materiales hipoalergénicos",
-      "Estructura reforzada",
-      "Acabados de lujo"
-    ],
-    specifications: {
-      "Tamaño": "M, L, XL",
-      "Material": "Tela premium anti-manchas",
-      "Relleno": "Espuma viscoelástica",
-      "Lavable": "Sí, máquina",
-      "Garantía": "2 años",
-      "Peso máximo": "20 kg"
-    },
-    inStock: true,
-    colors: ["Plateado", "Negro", "Blanco"],
-    relatedProducts: [1, 2]
-  }
-]
+import { products, getRelatedProducts, getColorValue } from "@/lib/products-data"
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params)
@@ -115,7 +19,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const [loading, setLoading] = useState(true)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(0)
-  const [addedToCart, setAddedToCart] = useState(false)
+  const [selectedColor, setSelectedColor] = useState<string>("")
+  const [quantity, setQuantity] = useState(1)
   const { cart, updateCart, addToCart } = useCart()
 
   // Refs para las miniaturas
@@ -134,6 +39,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
     const productSlug = resolvedParams.slug as string
     const foundProduct = products.find(p => p.slug === productSlug)
     setProduct(foundProduct)
+    if (foundProduct && foundProduct.colors && foundProduct.colors.length > 0) {
+      setSelectedColor(foundProduct.colors[0])
+    }
     setLoading(false)
   }, [resolvedParams])
 
@@ -305,31 +213,76 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 )}
               </div>
 
-              {/* Add to Cart Actions */}
-              <div className="space-y-3">
-                <Button
-                  size="lg"
-                  className="bg-[#ce2a4d] hover:bg-[#b8243e] text-white w-full"
-                  onClick={() => {
-                    addToCart({
-                      id: product.id,
-                      name: product.name,
-                      image: product.image,
-                      price: 0, // Los productos no tienen precio por ahora
-                      quantity: 1
-                    })
-                    setAddedToCart(true)
-                    setTimeout(() => setAddedToCart(false), 2000)
-                  }}
-                >
-                  <ShoppingCart className="mr-2 h-4 w-4" />
-                  Agregar al carrito
-                </Button>
-                {addedToCart && (
-                  <div className="text-center p-3 bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 rounded-lg">
-                    ✓ Producto agregado al carrito
+              {/* Color Selection */}
+              {product.colors && product.colors.length > 0 && (
+                <div className="space-y-3">
+                  <h4 className="font-medium text-gray-900 dark:text-white">
+                    Color: {selectedColor || product.colors[0]}
+                  </h4>
+                  <div className="flex flex-wrap gap-3">
+                    {product.colors.map((color: string) => (
+                      <button
+                        key={color}
+                        onClick={() => setSelectedColor(color)}
+                        className={`w-10 h-10 rounded-full border-3 transition-all duration-200 flex items-center justify-center ${
+                          selectedColor === color
+                            ? "border-[#ce2a4d] border-4 scale-110 shadow-lg"
+                            : "border-gray-300 dark:border-slate-600 hover:border-[#ce2a4d] hover:scale-105"
+                        }`}
+                        style={{
+                          backgroundColor: getColorValue(color)
+                        }}
+                        title={color}
+                      >
+                        {selectedColor === color && (
+                          <div className="w-2.5 h-2.5 bg-white rounded-full shadow-sm" />
+                        )}
+                      </button>
+                    ))}
                   </div>
-                )}
+                </div>
+              )}
+
+              {/* Quantity and Add to Cart - Inline */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-12 w-12"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    disabled={quantity <= 1}
+                  >
+                    <Minus className="h-5 w-5" />
+                  </Button>
+                  <span className="w-12 text-center text-xl font-medium text-gray-900 dark:text-white">
+                    {quantity}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-12 w-12"
+                    onClick={() => setQuantity(quantity + 1)}
+                  >
+                    <Plus className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    size="lg"
+                    className="bg-[#ce2a4d] hover:bg-[#b8243e] text-white flex-1 h-12"
+                    onClick={() => {
+                      addToCart({
+                        id: product.id,
+                        name: product.name,
+                        image: product.image,
+                        price: 0, // Los productos no tienen precio por ahora
+                        color: selectedColor || undefined
+                      }, quantity)
+                    }}
+                  >
+                    <ShoppingCart className="mr-2 h-5 w-5" />
+                    Agregar al carrito
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -383,27 +336,23 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
             Productos Relacionados
           </h2>
           <div className="grid md:grid-cols-4 gap-6">
-            {product.relatedProducts.slice(0, 3).map((relatedId: number) => {
-              const relatedProduct = products.find(p => p.id === relatedId)
-              if (!relatedProduct) return null
-              return (
-                <div key={relatedId} className="group cursor-pointer">
-                  <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800 mb-4">
-                    <img
-                      src={relatedProduct.image || "/placeholder.svg"}
-                      alt={relatedProduct.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                    {relatedProduct.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-slate-400 line-clamp-2">
-                    {relatedProduct.description}
-                  </p>
+            {getRelatedProducts(product.id).slice(0, 3).map((relatedProduct) => (
+              <div key={relatedProduct.id} className="group cursor-pointer">
+                <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800 mb-4">
+                  <img
+                    src={relatedProduct.image || "/placeholder.svg"}
+                    alt={relatedProduct.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-              )
-            })}
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                  {relatedProduct.name}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-slate-400 line-clamp-2">
+                  {relatedProduct.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

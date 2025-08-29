@@ -11,72 +11,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import CartSidebar from "@/components/cart-sidebar"
 import { useCart } from "@/contexts/cart-context"
-
-// Mock data for products (sin precios)
-const products = [
-  {
-    id: 1,
-    slug: "rascador-premium-madera",
-    name: "Rascador Premium Madera",
-    category: "Rascadores",
-    image: "/wooden-cat-scratching-posts-premium-quality-modern.png",
-    description: "Rascador 100% madera alfombrada, diseño exclusivo HO Factory Pet",
-    features: ["Madera premium", "Alfombrado resistente", "Diseño exclusivo"],
-    inStock: true,
-  },
-  {
-    id: 2,
-    slug: "petrrari-moises-auto",
-    name: "Petrrari Moisés Auto",
-    category: "Camas Exclusivas",
-    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
-    description: "Cama exclusiva en forma de auto deportivo, pana sublimada premium",
-    features: ["Pana sublimada", "Diseño exclusivo", "Anti-desgarro"],
-    inStock: true,
-  },
-  {
-    id: 3,
-    slug: "merc3des-pet-bed",
-    name: "Merc3des Pet Bed",
-    category: "Camas Exclusivas",
-    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
-    description: "Cama de lujo inspirada en Mercedes, calidad super premium",
-    features: ["Calidad super premium", "Anti-manchas", "Diseño único"],
-    inStock: true,
-  },
-  {
-    id: 4,
-    slug: "combi-vw-hippie-cucha",
-    name: "Combi VW Hippie Cucha",
-    category: "Camas Exclusivas",
-    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
-    description: "Cucha estilo Combi VW hippie, pana aterciopelada",
-    features: ["Estilo retro", "Pana aterciopelada", "Lavable"],
-    inStock: true,
-  },
-  {
-    id: 5,
-    slug: "mochila-transportadora-premium",
-    name: "Mochila Transportadora Premium",
-    category: "Transportadoras",
-    image: "/happy-dog-and-cat-with-premium-pet-products-modern.png",
-    description: "Mochila transportadora de alta calidad para gatos",
-    features: ["Ventilación óptima", "Correas acolchadas", "Resistente"],
-    inStock: true,
-  },
-  {
-    id: 6,
-    slug: "alimento-dr-cossia-natural",
-    name: "Alimento Dr. Cossia Natural",
-    category: "Alimentos",
-    image: "/happy-woman-with-yellow-sweater-holding-small-whit.png",
-    description: "Alimento natural premium línea Dr. Cossia",
-    features: ["100% natural", "Sin conservantes", "Nutrición completa"],
-    inStock: true,
-  },
-]
-
-const categories = ["Todos", "Rascadores", "Camas Exclusivas", "Transportadoras", "Alimentos"]
+import { products, categories, getColorValue } from "@/lib/products-data"
 
 export default function ProductosPage() {
   const searchParams = useSearchParams()
@@ -269,6 +204,39 @@ export default function ProductosPage() {
                     </ul>
                   </div>
 
+                  {/* Colores disponibles */}
+                  {product.colors && product.colors.length > 0 && (
+                    <div className="mb-4">
+                      <h4 className="font-semibold text-sm text-gray-700 dark:text-slate-300 mb-2">
+                        Colores disponibles ({product.colors.length}):
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {product.colors.slice(0, 4).map((color, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center space-x-1"
+                            title={color}
+                          >
+                            <div
+                              className="w-4 h-4 rounded-full border border-gray-300"
+                              style={{
+                                backgroundColor: getColorValue(color)
+                              }}
+                            />
+                            <span className="text-xs text-gray-600 dark:text-slate-400">
+                              {color}
+                            </span>
+                          </div>
+                        ))}
+                        {product.colors.length > 4 && (
+                          <span className="text-xs text-gray-500 dark:text-slate-500">
+                            +{product.colors.length - 4} más
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500 dark:text-slate-400">
                       {product.inStock ? "Disponible" : "No disponible"}
@@ -282,8 +250,7 @@ export default function ProductosPage() {
                             id: product.id,
                             name: product.name,
                             image: product.image,
-                            price: 0,
-                            quantity: 1
+                            price: 0
                           })
                         }}
                         disabled={!product.inStock}
@@ -292,7 +259,7 @@ export default function ProductosPage() {
                         Agregar
                       </Button>
                       <Link href={`/productos/${product.slug}`}>
-                        <Button size="sm" variant="outline" className="border-[#2d549b] text-[#2d549b] hover:bg-[#2d549b] hover:text-white">
+                        <Button size="sm" variant="outline" className="border-[#2d549b] text-[#2d549b] dark:text-white hover:bg-[#2d549b] hover:text-white">
                           Ver Detalles
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
