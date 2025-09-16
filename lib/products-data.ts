@@ -20,22 +20,20 @@ export interface Product {
 export const products: Product[] = [
   {
     id: 1,
-    slug: "rascador-premium-madera",
-    name: "Rascador Premium Madera",
+    slug: "rascador-premium-gato",
+    name: "Rascador Premium Para Gato",
     category: "Rascadores",
     image: "/wooden-cat-scratching-posts-premium-quality-modern.png",
-    images: [
-      "/wooden-cat-scratching-posts-premium-quality-modern.png"
-    ],
+    images: ["/wooden-cat-scratching-posts-premium-quality-modern.png"],
     description: "Rascador 100% madera alfombrada, diseño exclusivo HO Factory Pet. Fabricado con materiales premium y acabados perfectos para el bienestar de tu gato.",
-    longDescription: "Nuestro rascador premium de madera es el resultado de años de investigación y desarrollo. Cada pieza está cuidadosamente seleccionada y procesada para garantizar la máxima durabilidad y funcionalidad. El diseño exclusivo no solo es estéticamente atractivo, sino que también proporciona múltiples superficies de rascado para satisfacer las necesidades naturales de tu gato.",
+    longDescription: "Diseño sólido y estable: construidos con bases firmes que evitan movimientos y caídas. Diferentes diseños y alturas que se adecuan a cualquier ambiente. Multiples areas de rasgado recubiertas de cintas de algodón pesado, para evitar la  pérdida de pelos que puedan ser ingeridos por nuestra mascota. Y de máxima resistencia al rasgado. Plataformas y refugios pensados para un óptimo transito y uso de los espacios ideales para juego, descanso y observación. Tapizados resistentes y fáciles de limpiar, pensados para el uso diario-  Modelos verticales y compactos que se adaptan a cualquier espacio del hogar. Estética moderna, materiales y colores sobrios combinables con la decoración de la casa.",
     features: [
-      "Madera premium seleccionada",
-      "Alfombrado resistente anti-desgarro",
-      "Diseño exclusivo y patentado",
-      "Múltiples niveles de rascado",
-      "Base estable y segura",
-      "Fácil de limpiar y mantener"
+      "Madera maciza",
+      "Alfombra premium",
+      "Base firme",
+      "Cintas de algodón pesado",
+      "Plataformas y refugios",
+      "Tapizados resistentes"
     ],
     specifications: {
       "Altura": "120 cm",
@@ -46,163 +44,262 @@ export const products: Product[] = [
       "Garantía": "2 años"
     },
     inStock: true,
-    colors: ["Natural", "Marrón", "Negro"],
-    relatedProducts: [2, 3]
+    colors: ["Gris", "Negro"],
+    relatedProducts: []
   },
   {
     id: 2,
-    slug: "petrrari-moises-auto",
-    name: "Petrrari Moisés Auto",
-    category: "Camas Exclusivas",
-    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
-    images: [
-      "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png"
-    ],
-    description: "Cama exclusiva en forma de auto deportivo, pana sublimada premium. Diseño único inspirado en autos de lujo.",
-    longDescription: "La cama Petrrari es nuestra creación más emblemática. Inspirada en los autos deportivos más exclusivos del mundo, esta cama combina elegancia, confort y funcionalidad. La pana sublimada premium no solo es suave al tacto, sino que también es resistente a manchas y fácil de limpiar.",
+    slug: "cama-moises-mascota",
+    name: "Cama Moisés para mascota",
+    category: "Camas Premium",
+    image: "/placeholder.jpg",
+    images: ["/placeholder.jpg"],
+    description: "Cama Moisés Rectangular. de Pana aterciopelada.",
+    longDescription: "Anti desgarro con proceso Anti mancha. Rellena de Vellón Siliconado,  100% lavable. color inalterable. Mejor no hay, ya que la Pana aterciopelada es una caricia perfecta para garantizar un descanso confortable y un tacto inigualable que tu mascota percibe.",
     features: [
-      "Pana sublimada premium",
-      "Diseño exclusivo y patentado",
-      "Anti-desgarro y anti-manchas",
-      "Relleno de alta densidad",
-      "Fácil de lavar",
-      "Múltiples tamaños disponibles"
+      "Pana aterciopelada",
+      "Anti desgarro",
+      "Anti mancha",
+      "Relleno de vellón siliconado",
+      "100% lavable",
+      "Color inalterable"
     ],
     specifications: {
-      "Tamaño": "S, M, L, XL",
-      "Material": "Pana sublimada premium",
-      "Relleno": "Espuma de alta densidad",
-      "Lavable": "Sí, máquina",
-      "Garantía": "1 año",
-      "Peso máximo": "15 kg"
+      "Tamaños": "S (50X40), M (60X48), L (70X56)"
     },
     inStock: true,
-    colors: ["Rojo Ferrari", "Negro", "Azul"],
-    relatedProducts: [1, 3]
+    colors: [],
+    relatedProducts: []
   },
   {
     id: 3,
-    slug: "merc3des-pet-bed",
-    name: "Merc3des Pet Bed",
-    category: "Camas Exclusivas",
-    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
-    images: [
-      "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png"
-    ],
-    description: "Cama de lujo inspirada en Mercedes, calidad super premium. Elegancia y confort en cada detalle.",
-    longDescription: "La cama Merc3des representa la máxima expresión de lujo y calidad. Inspirada en la elegancia de los automóviles Mercedes-Benz, esta cama ofrece un confort excepcional con materiales de la más alta calidad. Cada detalle está cuidadosamente diseñado para proporcionar la mejor experiencia para tu mascota.",
+    slug: "cama-nido-mascota",
+    name: "Cama Nido para mascota",
+    category: "Camas Premium",
+    image: "/placeholder.jpg",
+    images: ["/placeholder.jpg"],
+    description: "Cama Nido Oval de Pana aterciopelada.",
+    longDescription: "Anti desgarro con proceso Anti mancha. Rellena de Vellón Siliconado,  100% lavable. color inalterable. Mejor no hay, ya que la Pana aterciopelada es una caricia perfecta para garantizar un descanso confortable y un tacto inigualable que tu mascota percibe.",
     features: [
-      "Calidad super premium",
-      "Anti-manchas avanzado",
-      "Diseño único y elegante",
-      "Materiales hipoalergénicos",
-      "Estructura reforzada",
-      "Acabados de lujo"
+      "Pana aterciopelada",
+      "Anti desgarro",
+      "Anti mancha",
+      "Relleno de vellón siliconado",
+      "100% lavable",
+      "Color inalterable"
     ],
     specifications: {
-      "Tamaño": "M, L, XL",
-      "Material": "Tela premium anti-manchas",
-      "Relleno": "Espuma viscoelástica",
-      "Lavable": "Sí, máquina",
-      "Garantía": "2 años",
-      "Peso máximo": "20 kg"
+      "Tamaños": "S (50X40), M (60X48), L (70X56)"
     },
     inStock: true,
-    colors: ["Plateado", "Negro", "Blanco"],
-    relatedProducts: [1, 2]
+    colors: [],
+    relatedProducts: []
   },
   {
     id: 4,
-    slug: "combi-vw-hippie-cucha",
-    name: "Combi VW Hippie Cucha",
-    category: "Camas Exclusivas",
-    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
-    images: [
-      "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png"
-    ],
-    description: "Cucha estilo Combi VW hippie, pana aterciopelada. Diseño retro único que combina nostalgia y confort para tu mascota.",
-    longDescription: "La Combi VW Hippie Cucha es un homenaje a la época dorada del hippismo y los viajes en van. Esta cama combina el estilo retro de la Combi Volkswagen con la comodidad moderna, creando un espacio acogedor y único para tu mascota. La pana aterciopelada no solo es suave al tacto, sino que también es resistente y fácil de mantener.",
+    slug: "dormilon-pana-aterciopelada",
+    name: "Dormilón de Pana aterciopelada",
+    category: "Colchón Súper Premium",
+    image: "/placeholder.jpg",
+    images: ["/placeholder.jpg"],
+    description: "Cama Dormilón de Pana aterciopelada, Anti desgarro. Ideal para interiores.",
+    longDescription: "El mejor colchón para perros grandes, súper confortable, con funda anti desgarro, anti manchas, 100% lavable, de colores inalterables y con apertura velcro para extraer el relleno y lavar. Su interior con colchón de friselina 80 y relleno de copos de goma espuma que se adaptan a la posición de la mascota.",
     features: [
-      "Estilo retro hippie",
-      "Pana aterciopelada premium",
-      "Diseño exclusivo Combi VW",
-      "Lavable en máquina",
-      "Relleno de alta densidad",
-      "Acabados artesanales"
+      "Pana aterciopelada",
+      "Anti desgarro",
+      "Anti manchas",
+      "100% lavable",
+      "Colores inalterables",
+      "Apertura velcro"
     ],
     specifications: {
-      "Tamaño": "S, M, L",
-      "Material": "Pana aterciopelada premium",
-      "Relleno": "Espuma de alta densidad",
-      "Lavable": "Sí, máquina",
-      "Garantía": "1 año",
-      "Peso máximo": "12 kg"
+      "Tamaños": "XL de 95x70 y XXL de 115x80"
     },
     inStock: true,
-    colors: ["Hippie", "Retro", "Vintage"],
-    relatedProducts: [1, 2]
+    colors: [],
+    relatedProducts: []
   },
   {
     id: 5,
-    slug: "mochila-transportadora-premium",
-    name: "Mochila Transportadora Premium",
-    category: "Transportadoras",
-    image: "/happy-dog-and-cat-with-premium-pet-products-modern.png",
-    images: [
-      "/happy-dog-and-cat-with-premium-pet-products-modern.png"
-    ],
-    description: "Mochila transportadora de alta calidad para gatos. Ventilación óptima y correas acolchadas para máxima seguridad y confort.",
-    longDescription: "Nuestra mochila transportadora premium está diseñada pensando en la seguridad y comodidad de tu gato. Con múltiples puntos de ventilación, correas acolchadas y materiales resistentes, esta mochila te permite transportar a tu mascota de manera segura y cómoda. Ideal para viajes, visitas al veterinario o paseos cortos.",
+    slug: "colchoneta-cordura-anti-desgarro",
+    name: "Colchoneta Cordura anti desgarro",
+    category: "Colchoneta",
+    image: "/placeholder.jpg",
+    images: ["/placeholder.jpg"],
+    description: "Cama Colchoneta Cordura anti desgarro impermeable para interior y exterior.",
+    longDescription: "La mejor colchoneta de cordura importada, impermeable, anti desgarro, 100% lavable a cepillo, con cierre velcro para extraer la placa de colchón poliester de alta densidad-",
     features: [
-      "Ventilación óptima",
-      "Correas acolchadas",
-      "Material resistente",
-      "Múltiples compartimentos",
-      "Fácil de limpiar",
-      "Diseño ergonómico"
+      "Cordura importada",
+      "Impermeable",
+      "Anti desgarro",
+      "100% lavable a cepillo",
+      "Cierre velcro"
     ],
     specifications: {
-      "Tamaño": "S, M, L",
-      "Material": "Nylon premium resistente",
-      "Capacidad": "Hasta 8 kg",
-      "Lavable": "Sí, manual",
-      "Garantía": "1 año",
-      "Dimensiones": "30 x 20 x 40 cm (M)"
+      "Tamaños": "XL de 95x70 y XXL de 115x80"
     },
     inStock: true,
-    colors: ["Negro", "Gris", "Azul"],
-    relatedProducts: [1, 3]
+    colors: [],
+    relatedProducts: []
   },
   {
     id: 6,
-    slug: "alimento-dr-cossia-natural",
-    name: "Alimento Dr. Cossia Natural",
-    category: "Alimentos",
-    image: "/happy-woman-with-yellow-sweater-holding-small-whit.png",
-    images: [
-      "/happy-woman-with-yellow-sweater-holding-small-whit.png"
-    ],
-    description: "Alimento natural premium línea Dr. Cossia. 100% natural, sin conservantes artificiales y nutrición completa para tu mascota.",
-    longDescription: "El alimento Dr. Cossia Natural representa la máxima calidad en nutrición para mascotas. Formulado con ingredientes 100% naturales y sin conservantes artificiales, este alimento proporciona una nutrición completa y balanceada. Cada ingrediente es cuidadosamente seleccionado para garantizar la salud y vitalidad de tu mascota.",
+    slug: "colchoneta-cordura-eco-anti-desgarro",
+    name: "Colchoneta Cordura ECO anti desgarro",
+    category: "Colchoneta almohadón",
+    image: "/placeholder.jpg",
+    images: ["/placeholder.jpg"],
+    description: "Cama Colchoneta almohadón de Cordura anti desgarro impermeable para interior y exterior.",
+    longDescription: "Colchoneta-almohadón con piso impermeable y superior de cordura anti desgarro , relleno de placa poliester y vellón siliconado. Lavado a cepillo.",
     features: [
-      "100% natural",
-      "Sin conservantes artificiales",
-      "Nutrición completa",
-      "Ingredientes premium",
-      "Hipoalergénico",
-      "Apto para todas las edades"
+      "Piso impermeable",
+      "Cordura anti desgarro",
+      "Relleno de placa poliester",
+      "Vellón siliconado",
+      "Lavado a cepillo"
+    ],
+    specifications: {},
+    inStock: true,
+    colors: [],
+    relatedProducts: []
+  },
+  {
+    id: 7,
+    slug: "cama-petrrari",
+    name: "Cama Petrrari",
+    category: "Camas Exclusivas",
+    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
+    images: ["/luxury-pet-beds-car-shaped-premium-quality-ferrari.png"],
+    description: "Cama exclusiva en forma de auto deportivo, pana sublimada premium.",
+    longDescription: "Anti desgarro y con proceso anti mancha. Diseño único inspirado en autos de lujo. 100% lavable y de colores inalterables. Exterior en Pana aterciopelada, anti desgarro y sublimada con diseños exclusivos.",
+    features: [
+      "Pana sublimada premium",
+      "Anti desgarro",
+      "Anti mancha",
+      "Diseño único",
+      "100% lavable",
+      "Colores inalterables"
     ],
     specifications: {
-      "Presentación": "1 kg, 5 kg, 15 kg",
-      "Tipo": "Seco premium",
-      "Edad": "Todas las edades",
-      "Conservación": "Ambiente seco",
-      "Garantía": "2 años",
-      "Certificaciones": "ISO 9001, HACCP"
+      "Tamaño": "S, M",
+      "Material": "Pana sublimada premium",
+      "Relleno": "Vellón siliconado y colchón extraíble de Espuma de alta densidad",
+      "Lavable": "Sí",
+      "Color": "Inalterable"
+    },
+    inStock: true,
+    colors: ["Rojo Ferrari", "Negro", "Azul"],
+    relatedProducts: []
+  },
+  {
+    id: 8,
+    slug: "cama-merc3des",
+    name: "Cama Merc3des",
+    category: "Camas Exclusivas",
+    image: "/luxury-pet-beds-car-shaped-premium-quality-ferrari.png",
+    images: ["/luxury-pet-beds-car-shaped-premium-quality-ferrari.png"],
+    description: "Cama de lujo inspirada en Mercedes, calidad super premium. Anti desgarro y con proceso anti mancha. Elegancia y confort en cada detalle. 100% lavable y de colores inalterables",
+    longDescription: "Anti desgarro y con proceso anti mancha. Diseño único inspirado en autos de lujo. 100% lavable y de colores inalterables. Exterior en Pana aterciopelada, anti desgarro y sublimada con diseños exclusivos.",
+    features: [
+      "Pana sublimada premium",
+      "Anti desgarro",
+      "Anti mancha",
+      "Diseño único",
+      "100% lavable",
+      "Colores inalterables"
+    ],
+    specifications: {
+      "Tamaño": "S, M",
+      "Material": "Pana sublimada premium",
+      "Relleno": "Vellón siliconado y colchón extraíble de Espuma de alta densidad",
+      "Lavable": "Sí",
+      "Color": "Inalterable"
+    },
+    inStock: true,
+    colors: ["Plateado", "Negro", "Blanco"],
+    relatedProducts: []
+  },
+  {
+    id: 9,
+    slug: "cucha-gato-combo-vw-hippie",
+    name: "Cucha para Gato Combo VW hippie",
+    category: "Camas Exclusivas",
+    image: "/placeholder.jpg",
+    images: ["/placeholder.jpg"],
+    description: "Cucha - Cueva - estilo Combi VW hippie, pana aterciopelada. Diseño retro, único, que combina nostalgia y confort para tu mascota.",
+    longDescription: "Las Cuchas estilo Combi VW Hippie de pana aterciopelada para gato o perros chicos son un excelente refugio confortable gracias a su colchón interior y relleno de goma espuma. Recrea las primeras Combis VW decoradas con el estilo POWER FLOWER en el festival de música en Woodstock 1969, EEUU y que dió inicio al Movimiento HIPPIE.",
+    features: [
+      "Pana aterciopelada premium",
+      "Colchón interior extraíble",
+      "Relleno de goma espuma",
+      "Diseño retro hippie",
+      "Lavable 100%"
+    ],
+    specifications: {
+      "Tamaño": "Único, 52x26x32",
+      "Material": "Pana aterciopelada premium",
+      "Relleno": "Espuma de alta densidad y colchón interior extraíble",
+      "Lavable": "100%"
+    },
+    inStock: true,
+    colors: ["Hippie", "Retro", "Vintage"],
+    relatedProducts: []
+  },
+  {
+    id: 10,
+    slug: "mochila-transportadora-premium",
+    name: "Mochila Transportadora Premium",
+    category: "Transportadores",
+    image: "/happy-dog-and-cat-with-premium-pet-products-modern.png",
+    images: ["/happy-dog-and-cat-with-premium-pet-products-modern.png"],
+    description: "Mochila transportadora de alta calidad para gatos. Ideal para transporte en moto. 100% forradas.  Ventilación óptima y correas acolchadas para máxima seguridad y confort.",
+    longDescription: "Tamaño: Unico. Base 33x30y42 de alto  Material: Cordura importada premium anti-desgarro, forrada. Piso rígido. Capacidad: Hasta  20 kg. Lavable: Sí, manual.",
+    features: [
+      "Cordura importada premium",
+      "Anti desgarro",
+      "Forrada",
+      "Piso rígido",
+      "Ventilación óptima",
+      "Correas acolchadas"
+    ],
+    specifications: {
+      "Tamaño": "Único. Base 33x30y42 de alto",
+      "Material": "Cordura importada premium anti-desgarro, forrada",
+      "Piso": "Rígido",
+      "Capacidad": "Hasta 20 kg",
+      "Lavable": "Sí, manual"
+    },
+    inStock: true,
+    colors: ["Negro", "Gris", "Azul"],
+    relatedProducts: []
+  },
+  {
+    id: 11,
+    slug: "bolso-transportador-premium",
+    name: "Bolso Transportador Premium",
+    category: "Transportadores",
+    image: "/placeholder.jpg",
+    images: ["/placeholder.jpg"],
+    description: "Bolso transportador apertura doble. Ventilación óptima, piso rígido y cintas reforzadas. Interior 100% forrado. seguro y confortable",
+    longDescription: "Tamaño: Unico. Base 22x42y30 de alto  Material: Cordura importada premium anti-desgarro, forrada. Piso rígido. Capacidad: Hasta  20 kg. Lavable: Sí, manual.",
+    features: [
+      "Cordura importada premium",
+      "Anti desgarro",
+      "Forrada",
+      "Piso rígido",
+      "Ventilación óptima",
+      "Cintas reforzadas"
+    ],
+    specifications: {
+      "Tamaño": "Único. Base 22x42y30 de alto",
+      "Material": "Cordura importada premium anti-desgarro, forrada",
+      "Piso": "Rígido",
+      "Capacidad": "Hasta 20 kg",
+      "Lavable": "Sí, manual"
     },
     inStock: true,
     colors: ["Natural", "Premium"],
-    relatedProducts: [1, 2]
+    relatedProducts: []
   }
 ]
 
@@ -247,4 +344,4 @@ export const getRelatedProducts = (productId: number): Product[] => {
 }
 
 // Categorías disponibles
-export const categories = ["Todos", "Rascadores", "Camas Exclusivas", "Transportadoras", "Alimentos"]
+export const categories = ["Todos", "Rascadores", "Camas Exclusivas", "Transportadores", "Colchoneta"]

@@ -82,7 +82,16 @@ export default function ProductosPage() {
   }, [searchTerm, selectedCategory, router])
 
   const filteredProducts = products.filter((product) => {
-    const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory
+    let matchesCategory = false;
+    if (selectedCategory === "Todos") {
+      matchesCategory = true;
+    } else if (selectedCategory === "Transportadores") {
+      matchesCategory = product.category === "Transportadores";
+    } else if (selectedCategory === "Colchoneta") {
+      matchesCategory = product.category === "Colchoneta" || product.category === "Colchoneta almohadón";
+    } else {
+      matchesCategory = product.category === selectedCategory;
+    }
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -110,9 +119,9 @@ export default function ProductosPage() {
       {/* Products Section */}
       <section className="py-20 dark:bg-slate-800">
         <div className="container mx-auto px-4">
-          {/* Filters */}
-          <div className="flex flex-col md:flex-row gap-4 mb-8">
-            <div className="flex-1">
+          {/* Filtros y búsqueda adaptados para lg (<1024px) */}
+          <div className="flex flex-col gap-4 mb-8 lg:mb-4">
+            <div className="w-full lg:w-1/2 lg:mx-auto">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
@@ -124,7 +133,7 @@ export default function ProductosPage() {
                 />
               </div>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
               {categories.map((category) => (
                 <Button
                   key={category}
@@ -188,7 +197,7 @@ export default function ProductosPage() {
                     <Badge className="absolute top-2 left-2 bg-red-500 text-white">Agotado</Badge>
                   )}
                 </div>
-                <CardContent className="p-4">
+                <CardContent className="p-4 flex flex-col h-full">
                   <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">{product.name}</h3>
                   <p className="text-gray-600 dark:text-slate-400 text-sm mb-3 line-clamp-2">{product.description}</p>
                   
@@ -237,10 +246,8 @@ export default function ProductosPage() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500 dark:text-slate-400">
-                      {product.inStock ? "Disponible" : "No disponible"}
-                    </span>
+                  <div className="flex items-center justify-end mt-auto">
+                    {/* Eliminado estado de disponibilidad visual */}
                     <div className="flex gap-2">
                       <Button 
                         size="sm" 
